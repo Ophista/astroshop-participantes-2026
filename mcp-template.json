@@ -1,6 +1,13 @@
 ﻿{
   "servers": {
-    "dynatrace": {
+    "dynatrace-playground": {
+      "type": "http",
+      "url": "https://wkf10640.apps.dynatrace.com/platform-reserved/mcp-gateway/v0.1/servers/dynatrace-mcp/mcp",
+      "headers": {
+        "Authorization": "Bearer TU_TOKEN_PLAYGROUND"
+      }
+    },
+    "dynatrace-lab": {
       "type": "http",
       "url": "https://ulk04354.sprint.apps.dynatracelabs.com/platform-reserved/mcp-gateway/v0.1/servers/dynatrace-mcp/mcp",
       "headers": {
