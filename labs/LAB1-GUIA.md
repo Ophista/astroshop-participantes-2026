@@ -1,10 +1,7 @@
 # Lab 1 — Enseñar a la IA a analizar (instruction files + DQL)
 
-**Duración:** ~30-40 minutos
-**Ambiente:** Dynatrace Playground (AstroShop) — MCP `dynatrace-playground`
-**Objetivo:** aprender a construir un instruction file que convierte a un agente
-genérico en un analista de observabilidad riguroso y eficiente. Verás la mejora
-en vivo, paso a paso.
+* **Ambiente:** Dynatrace Playground (AstroShop) — MCP `dynatrace-playground`
+* **Objetivo:** aprender a construir un instruction file que convierte a un agente genérico en un analista de observabilidad riguroso y eficiente.
 
 ---
 
@@ -30,12 +27,11 @@ observas cómo el agente analiza mejor: más enfocado, más eficiente y más hon
 
 1. Arranca solo el MCP de playground:
    `Ctrl+Shift+P` → **MCP: List Servers** → `dynatrace-playground` → **Start**
-   (Para este lab NO necesitas `dynatrace-lab`.)
 2. Copia el instruction file base:
    ```
    cp labs/LAB1-paso-0.md .github/copilot-instructions.md
    ```
-3. Abre Copilot Chat en **Agent mode**.
+3. Abre Copilot Chat en **Agent mode**. `Ctrl+Shift+P`
 
 > IMPORTANTE sobre Copilot: cada vez que edites `.github/copilot-instructions.md`,
 > **abre un chat NUEVO** para que relea el archivo. Si no, sigue usando la versión
@@ -47,8 +43,7 @@ observas cómo el agente analiza mejor: más enfocado, más eficiente y más hon
 
 En cada paso usarás la misma pregunta, para comparar cómo mejora la respuesta:
 
-> Lista los problemas que ha tenido la aplicación AstroShop en las últimas 24 horas
-> y dame un primer diagnóstico.
+> Analiza astroshop e identifica el problema más crítico en las últimas 24 horas. Explícame la causa raíz con evidencia
 
 ---
 
