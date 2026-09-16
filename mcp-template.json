@@ -7,13 +7,6 @@
         "Authorization": "Bearer TU_TOKEN_PLAYGROUND"
       }
     },
-    "dynatrace-lab": {
-      "type": "http",
-      "url": "https://ulk04354.sprint.apps.dynatracelabs.com/platform-reserved/mcp-gateway/v0.1/servers/dynatrace-mcp/mcp",
-      "headers": {
-        "Authorization": "Bearer TU_TOKEN_DYNATRACE"
-      }
-    },
     "github": {
       "type": "http",
       "url": "https://api.githubcopilot.com/mcp/",
@@ -21,5 +14,15 @@
         "Authorization": "Bearer TU_TOKEN_GITHUB"
       }
     }
+    /* PARA LABS 2 Y 3: descomenta este bloque para activar tu tenant.
+    ,
+    "dynatrace-lab": {
+      "type": "http",
+      "url": "https://ulk04354.sprint.apps.dynatracelabs.com/platform-reserved/mcp-gateway/v0.1/servers/dynatrace-mcp/mcp",
+      "headers": {
+        "Authorization": "Bearer TU_TOKEN_DYNATRACE"
+      }
+    }
+    */
   }
 }
