@@ -1,191 +1,165 @@
-# Lab 1 — Enseñar a la IA a consultar (instruction files + DQL)
+# Lab 1 — Enseñar a la IA a analizar (instruction files + DQL)
 
-**Duración:** ~30 minutos
+**Duración:** ~30-40 minutos
 **Ambiente:** Dynatrace Playground (AstroShop) — MCP `dynatrace-playground`
-**Objetivo doble:** aprender a escribir buenos instruction files Y ver cómo
-transforman a un asistente genérico en uno que consulta con precisión.
+**Objetivo:** aprender a construir un instruction file que convierte a un agente
+genérico en un analista de observabilidad riguroso y eficiente. Verás la mejora
+en vivo, paso a paso.
 
 ---
 
 ## La idea del lab
 
-Un asistente de IA sin contexto es como un empleado nuevo brillante que no conoce
-tu empresa: sabe mucho en general, pero no sabe TU ambiente. El instruction file
-es el manual que le das para que trabaje bien en TU contexto.
+Un agente de IA sin contexto es como un analista nuevo brillante que no conoce tu
+ambiente: sabe DQL en general, pero no sabe TU aplicación, ni tu método, ni tus
+reglas. El instruction file es el manual que le das.
 
-En este lab partes de un instruction file "pobre" y lo mejoras en 3 pasos. En
-cada uno verás dos cosas: **cómo mejora la respuesta del asistente**, y **por qué
-se escribe la instrucción de esa forma** (las buenas prácticas).
+En este lab construyes ese manual en **5 pasos**. En cada paso agregas una capa y
+observas cómo el agente analiza mejor: más enfocado, más eficiente y más honesto.
 
----
+## Buenas prácticas que aplicarás
 
-## Principios que vas a aplicar (y por qué importan)
-
-Todo lo que escribes en el instruction file consume contexto y compite por la
-atención del asistente. Un archivo inflado no solo desperdicia tokens: baja la
-calidad, porque el asistente tiene más reglas que seguir y las sigue de forma
-menos consistente.
-
-Cuatro reglas guían este lab:
-
-1. **Incluye solo lo que causaría errores si faltara.** Todo lo demás es ruido.
-2. **Usa imperativos, no sugerencias.** "Filtra por X", no "sería bueno filtrar por X".
-3. **Sé específico y verificable.** "Ventana de 30 minutos", no "un rango razonable".
-4. **Reserva IMPORTANT para 2-3 reglas críticas.** Si todo es importante, nada lo es.
+- Incluye solo lo que causaría errores si faltara. El resto es ruido.
+- Usa imperativos ("Filtra por X"), no sugerencias ("sería bueno filtrar").
+- Sé específico y verificable (nombres de campo, comandos, números).
+- Reserva IMPORTANT para 2-3 reglas críticas. Si todo es importante, nada lo es.
 
 ---
 
 ## Preparación
 
-1. Arranca el MCP de playground:
+1. Arranca solo el MCP de playground:
    `Ctrl+Shift+P` → **MCP: List Servers** → `dynatrace-playground` → **Start**
-2. Copia el instruction file inicial:
+   (Para este lab NO necesitas `dynatrace-lab`.)
+2. Copia el instruction file base:
    ```
-   cp labs/LAB1-instruction-inicial.md .github/copilot-instructions.md
+   cp labs/LAB1-paso-0.md .github/copilot-instructions.md
    ```
 3. Abre Copilot Chat en **Agent mode**.
 
-> Nota sobre Copilot: al editar `.github/copilot-instructions.md`, a veces hay que
-> abrir un **chat nuevo** para que relea las instrucciones. Si una mejora no se
-> refleja, abre un chat nuevo y repite la pregunta.
+> IMPORTANTE sobre Copilot: cada vez que edites `.github/copilot-instructions.md`,
+> **abre un chat NUEVO** para que relea el archivo. Si no, sigue usando la versión
+> anterior.
 
 ---
 
-## Checkpoint 0 — El punto de partida
+## El prompt de referencia
 
-Con el instruction file pobre (2 líneas), pregunta:
+En cada paso usarás la misma pregunta, para comparar cómo mejora la respuesta:
 
-> Muéstrame los servicios de AstroShop con más errores en la última hora.
-
-**Observa:** sin contexto, el asistente hace una consulta genérica, no sabe qué
-es AstroShop, no sabe qué campo marca un error, o te pregunta demasiado. Guarda
-esta respuesta: es tu línea base para comparar al final.
+> Lista los problemas que ha tenido la aplicación AstroShop en las últimas 24 horas
+> y dame un primer diagnóstico.
 
 ---
 
-## Checkpoint 1 — Darle contexto del ambiente
+## Paso 0 — Base (Herramientas + Ambiente)
 
-**El problema:** el asistente no conoce tu aplicación ni cómo se modelan sus datos.
-Eso es justo lo que "causaría errores si faltara" (regla 1). Se lo damos.
+Ya copiaste `LAB1-paso-0.md`. Este archivo solo le dice al agente dos cosas: que
+use el MCP de playground (no dtctl ni el otro tenant), y que filtre por el
+namespace `astroshop`.
 
-Abre `.github/copilot-instructions.md` y agrega:
+Abre un chat nuevo y lanza el prompt de referencia.
 
-```markdown
-## El ambiente
-- La aplicación es AstroShop: e-commerce de ~20 microservicios
-  (payment, checkout, cart, frontend, currency, shipping...).
-- Corre en Kubernetes. Los datos están en Grail y se consultan con DQL.
-- Para analizar servicios, usa spans. Filtra por `service.name`.
-- Un span fallido se marca con `request.is_failed == true`.
+**Observa:** el agente ya consulta el playground y se acota a AstroShop, pero su
+análisis es improvisado: puede saltar directo a datos crudos, no seguir un método,
+o traer rangos enormes. Guarda esta respuesta como punto de partida.
+
+---
+
+## Paso 1 — Darle un método y las fuentes de datos
+
+**El problema:** el agente no sabe POR DÓNDE empezar ni qué fuentes existen. Se lo
+enseñamos.
+
+Reemplaza tu instruction file por el del paso 1:
+```
+cp labs/LAB1-paso-1.md .github/copilot-instructions.md
+```
+(O agrega tú mismo las secciones "Método de análisis" y "Fuentes de datos".)
+
+Abre chat nuevo, lanza el prompt de referencia.
+
+**La mejora:** ahora el agente sigue un método — empieza por los problemas de
+Davis, identifica entidades afectadas, cuantifica con golden signals. El análisis
+deja de ser improvisado y se vuelve estructurado.
+
+---
+
+## Paso 2 — Reglas de eficiencia
+
+**El problema:** el agente puede hacer consultas costosas (rangos abiertos, traer
+registros crudos sin agregar). En un tenant real eso cuesta tiempo y dinero.
+
+```
+cp labs/LAB1-paso-2.md .github/copilot-instructions.md
 ```
 
-**Fíjate en la forma:** son imperativos ("usa spans", "filtra por") y datos
-verificables (el nombre exacto del campo `request.is_failed`). Nada de "deberías"
-ni de relleno.
+Abre chat nuevo, lanza el prompt de referencia.
 
-Guarda. Abre un chat nuevo si es necesario, y vuelve a preguntar lo mismo:
-
-> Muéstrame los servicios de AstroShop con más errores en la última hora.
-
-**La mejora:** ahora el asistente usa `service.name` y `request.is_failed`. La
-consulta es concreta y correcta, no genérica.
+**La mejora:** ahora el agente acota el timeframe, agrega antes de traer registros
+crudos, y pone `limit`. Las consultas son más rápidas y baratas. Fíjate en cómo
+cambian las queries que muestra.
 
 ---
 
-## Checkpoint 2 — Reglas de calidad para las consultas
+## Paso 3 — Rigor (anti-alucinación)
 
-**El problema:** si pides algo temporal, el asistente promedia todo y esconde los
-picos recientes. Esa es una "trampa común" que hay que prevenir (regla 1).
+**El problema crítico:** un agente puede afirmar cosas con seguridad sin haberlas
+verificado, o inventar nombres de campo. Esto es lo más peligroso en un análisis.
 
-Agrega:
-
-```markdown
-## Reglas de consulta
-- Investiga los últimos 30 minutos por defecto.
-- Para evolución en el tiempo, agrupa en intervalos con `makeTimeseries` o `bin`.
-  No uses un promedio agregado único: diluye los picos recientes.
-- Muestra siempre la consulta DQL que ejecutaste.
+```
+cp labs/LAB1-paso-3.md .github/copilot-instructions.md
 ```
 
-**Fíjate:** cada regla es específica y verificable ("30 minutos", nombres de
-comandos DQL), y usa la negación imperativa donde importa ("No uses un promedio
-agregado único").
+Abre chat nuevo, lanza el prompt de referencia.
 
-Guarda (chat nuevo si hace falta). Pregunta algo temporal:
-
-> ¿Cómo ha evolucionado la tasa de error del servicio payment en los últimos 30 minutos?
-
-**La mejora:** en vez de un número plano, el asistente devuelve una serie temporal
-que muestra la evolución real, y te enseña la consulta.
+**La mejora:** ahora el agente basa cada conclusión en datos reales, explora la
+estructura con `limit 5` antes de asumir, y si algo no aparece, lo dice en vez de
+inventarlo. Muestra siempre la query. Este paso es el que más confianza aporta.
 
 ---
 
-## Checkpoint 3 — Desambiguar entidades (una regla crítica)
+## Paso 4 — Formato del hallazgo
 
-**El problema:** en AstroShop, un servicio aparece con varios nombres (por OneAgent
-y OpenTelemetry). Si el asistente elige la entidad equivocada, todo el diagnóstico
-sale mal. Esto sí es crítico → merece un IMPORTANT (regla 4).
+**El toque final:** que cada hallazgo se presente de forma consistente y accionable.
 
-Agrega:
-
-```markdown
-## Entidades duplicadas
-- IMPORTANT: un servicio (ej. payment) puede aparecer como varias entidades por
-  tener OneAgent y OpenTelemetry a la vez. No asumas que la primera es la correcta.
-- Lista las entidades que coincidan con el nombre, compara su throughput y error
-  rate, y di explícitamente cuál usas y por qué.
+```
+cp labs/LAB1-paso-4.md .github/copilot-instructions.md
 ```
 
-**Fíjate:** es la única regla marcada como IMPORTANT en todo el archivo. Se lo
-gana porque ignorarla causa un diagnóstico incorrecto. Si marcáramos todo como
-IMPORTANT, el asistente no distinguiría lo crítico de lo normal.
+Abre chat nuevo, lanza el prompt de referencia.
 
-Guarda (chat nuevo si hace falta). Pregunta:
-
-> Analiza el servicio payment: dime su tasa de error y cuántas peticiones maneja.
-
-**La mejora:** el asistente reconoce que hay varias entidades payment, las compara,
-y te dice cuál usa. Ya no se confunde.
+**La mejora:** el agente ahora estructura cada hallazgo (síntoma → evidencia →
+entidad → causa raíz → recomendación). El resultado es un análisis que un equipo
+puede leer y accionar de inmediato.
 
 ---
 
-## Cierre — Compara y reflexiona
+## Cierre — Compara
 
-Abre tu `.github/copilot-instructions.md` final y compáralo con el inicial (2
-líneas). Fíjate en tres cosas:
+Abre tu instruction file final (paso 4) y compáralo con el paso 0. Fíjate:
 
-1. **Cuánto mejoró el asistente** con solo darle contexto y reglas.
-2. **Sigue siendo corto** — cada línea gana su lugar. No hay relleno ni cosas que
-   el asistente ya sabía (sintaxis de DQL, qué es un microservicio).
-3. **Una sola regla es IMPORTANT** — la que de verdad rompe todo si falta.
+1. **Cuánto mejoró el análisis** — de improvisado a metódico, eficiente y verificable.
+2. **Cada sección tiene un propósito** — método, eficiencia, rigor, formato. Nada
+   de relleno.
+3. **Solo lo crítico es IMPORTANT** — la herramienta, el timeframe, el anti-alucinación.
 
-**La lección:** el asistente no se volvió más inteligente. Le enseñaste tu
-ambiente, con instrucciones imperativas, específicas y sin ruido. Eso es un buen
-instruction file.
+**La lección:** el agente no se volvió más inteligente. Le diste un método, reglas
+y rigor. Eso es un buen instruction file, y es lo que separa un asistente que
+adivina de uno en el que puedes confiar.
 
-En los Labs 2 y 3 usarás `INSTRUCCIONES-0X.md`: la versión madura y completa de lo
-que acabas de construir, escrita con estos mismos principios.
-
----
-
-## Recordatorio de buenas prácticas (para cuando escribas los tuyos)
-
-- Incluye solo lo que causaría errores si faltara. El resto es ruido.
-- Imperativos, no sugerencias: "Usa X", no "sería bueno usar X".
-- Específico y verificable: nombres de campo, comandos exactos, números concretos.
-- IMPORTANT solo para 2-3 reglas críticas.
-- Estructura con headers y bullets: el asistente escanea como un humano.
-- Máximo ~200 líneas. Si crece más, divídelo.
-- No mandes al asistente a hacer trabajo de un linter: los patrones del código
-  se aprenden solos por contexto.
+En los Labs 2 y 3 usarás `INSTRUCCIONES-0X.md`: la versión de este manual aplicada
+a TU namespace, para crear recursos y remediar incidentes.
 
 ---
 
-## Si te quedas atrás (checkpoints de respaldo)
+## Si te quedas atrás
 
-Copia el checkpoint correspondiente para ponerte al día:
+Copia el paso correspondiente y continúa:
 ```
-cp labs/LAB1-checkpoint-1.md .github/copilot-instructions.md
-cp labs/LAB1-checkpoint-2.md .github/copilot-instructions.md
-cp labs/LAB1-checkpoint-3.md .github/copilot-instructions.md
+cp labs/LAB1-paso-0.md .github/copilot-instructions.md
+cp labs/LAB1-paso-1.md .github/copilot-instructions.md
+cp labs/LAB1-paso-2.md .github/copilot-instructions.md
+cp labs/LAB1-paso-3.md .github/copilot-instructions.md
+cp labs/LAB1-paso-4.md .github/copilot-instructions.md
 ```
