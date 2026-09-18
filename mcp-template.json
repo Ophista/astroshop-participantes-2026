@@ -14,7 +14,7 @@
         "Authorization": "Bearer TU_TOKEN_GITHUB"
       }
     }
-    /* PARA LABS 2 Y 3: descomenta este bloque para activar tu tenant.
+    /* PARA LAB 2: descomenta este bloque para activar tu tenant.
     ,
     "dynatrace-lab": {
       "type": "http",
