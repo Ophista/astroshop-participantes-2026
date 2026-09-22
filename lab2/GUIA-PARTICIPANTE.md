@@ -22,7 +22,8 @@ En este lab aprenderás a usar el agente de IA no solo para consultar datos, sin
 2. Abrir la terminal y ejecutar el siguiente comando: esto creará el instruction file de este nuevo laboratorio
   * Reemplazar el X por el identificador dado a cada participante `INSTRUCCIONES-01, INSTRUCCIONES-02, INSTRUCCIONES-03, etc`
 ```
-cp INSTRUCCIONES-0X.md .github/copilot-instructions.md
+cp lab2/INSTRUCCIONES-0X.md .github/copilot-instructions.md
+head -1 .github/copilot-instructions.md   # debe mostrar tu número de participante
 ```
 3. Abrir la paleta de comandos (`Ctrl+Shift+P`) y click en **MCP: List Servers**.
 4. Selecciona `dynatrace-lab` → **Start**.

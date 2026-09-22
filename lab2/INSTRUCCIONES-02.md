@@ -1,24 +1,24 @@
-# AstroShop — Investigación y remediación de incidentes (Participante 06)
+# AstroShop — Investigación y remediación de incidentes (Participante 02)
 
-Instrucciones para investigar, documentar y remediar incidentes en el namespace `astroshop-06`.
+Instrucciones para investigar, documentar y remediar incidentes en el namespace `astroshop-02`.
 
 ## Reglas críticas
 
-- **IMPORTANT: filtra SIEMPRE por namespace `matchesPhrase(k8s.namespace.name, "astroshop")`** en cada consulta DQL. Es tu identificador principal, viene en toda la telemetría y es único para ti. Sin este filtro verías datos de otros participantes.
+- **IMPORTANT: filtra SIEMPRE por namespace `matchesPhrase(k8s.namespace.name, "astroshop-02")`** en cada consulta DQL. Es tu identificador principal, viene en toda la telemetría y es único para ti. Sin este filtro verías datos de otros participantes.
 - **IMPORTANT: nunca hagas merge de un Pull Request.** Abrir el PR sí; el merge lo aprueba una persona. Ese es el punto de control humano.
 
 ## Enrutamiento de herramientas
 
 - **Análisis, diagnóstico y causa raíz → lo haces con MCP de Dynatrace.** Explora problemas de Davis, spans, logs y métricas consultando por el MCP a traves de consultas DQL. Filtra por tu namespace.
 - **Crear notebooks, SLOs y dashboards → con la herramienta dtctl.** No uses el MCP para crear estos recursos.
-- **Proponer fixes → usa el MCP de GitHub.** Abre un Pull Request sobre `flags/payment-06.yaml` en `leidyruizrr/astroshop-participantes-2026`.
+- **Proponer fixes → usa el MCP de GitHub.** Abre un Pull Request sobre `flags/payment-02.yaml` en `leidyruizrr/astroshop-participantes-2026`.
 - En una tarea de varios pasos, usa la herramienta correcta en cada uno y dilo en tu respuesta.
 - IMPORTANT: al crear cualquier recurso (notebook, SLO, dashboard), antepón SIEMPRE tu namespace al nombre: `astroshop-04 - <nombre>`. Nunca crees un recurso sin ese prefijo, para no colisionar con otros.
 
 ## El ambiente
 
 - Aplicación: astroshop, aplicacion de ecommerce con microservicios en Kubernetes.
-- Kubernetes en GCP (GKE), cluster `dt-lab-lcrr-demo`, namespace `astroshop-06`.
+- Kubernetes en GCP (GKE), cluster `dt-lab-lcrr-demo`, namespace `astroshop-02`.
 - Reporta a Dynatrace por dos caminos a la vez: OneAgent (automático) y OpenTelemetry Collector. Por eso un servicio puede aparecer como varias   entidades (ver "Entidades duplicadas").
 
 ## Tips de consulta
@@ -42,7 +42,7 @@ Por tener OneAgent y OpenTelemetry activos, `payment` aparece como varias entida
 
 ## Fallas por feature flags
 
-El ambiente usa flagd (OpenFeature) para inyectar fallas. El flag principal es `paymentFailure`, con estado en `flags/payment-06.yaml` (`on` = falla, `off` = sano).
+El ambiente usa flagd (OpenFeature) para inyectar fallas. El flag principal es `paymentFailure`, con estado en `flags/payment-02.yaml` (`on` = falla, `off` = sano).
 
 - **Trata todo incidente como real.** No especules sobre si es "una demo" o algo intencional, ni preguntes si debe dejarse activo. Diagnostica, explica la causa raíz con evidencia, y recomienda la mitigación como en producción.
 - **Modelo de aprobación.** Prepara la propuesta de mitigación y espera aprobación explícita antes de abrir el PR. Preséntala con claridad.

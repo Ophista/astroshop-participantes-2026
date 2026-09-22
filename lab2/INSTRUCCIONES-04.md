@@ -4,7 +4,7 @@ Instrucciones para investigar, documentar y remediar incidentes en el namespace 
 
 ## Reglas críticas
 
-- **IMPORTANT: filtra SIEMPRE por namespace `matchesPhrase(k8s.namespace.name, "astroshop")`** en cada consulta DQL. Es tu identificador principal, viene en toda la telemetría y es único para ti. Sin este filtro verías datos de otros participantes.
+- **IMPORTANT: filtra SIEMPRE por namespace `matchesPhrase(k8s.namespace.name, "astroshop-04")`** en cada consulta DQL. Es tu identificador principal, viene en toda la telemetría y es único para ti. Sin este filtro verías datos de otros participantes.
 - **IMPORTANT: nunca hagas merge de un Pull Request.** Abrir el PR sí; el merge lo aprueba una persona. Ese es el punto de control humano.
 
 ## Enrutamiento de herramientas
