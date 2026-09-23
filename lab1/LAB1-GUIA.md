@@ -1,6 +1,5 @@
 # Lab 1 - Guia del Participante
 
-
 * **Ambiente:** Dynatrace Playground (AstroShop) — MCP `dynatrace-playground`
 * **Objetivo:** aprender a construir un instruction file que convierte a un agente genérico en un analista de observabilidad riguroso y eficiente.
 
@@ -47,7 +46,7 @@ observas cómo el agente analiza mejor: más enfocado, más eficiente y más hon
 1. Ubicar el archivo  `.vscode/mcp.json` y agregar el Token de Github creado previamente
 2. Abrir la terminal y ejecutar el siguiente comando: esto creará el archivo de instrucciones base
 ```
-cp labs/LAB1-paso-0.md .github/copilot-instructions.md
+cp lab1/LAB1-paso-0.md .github/copilot-instructions.md
 ```
 3. Abrir la paleta de comandos (`Ctrl+Shift+P`) buscar por MCP y click en **MCP: List Servers**.
 4. Selecciona `dynatrace-playground` → **Start Server**.
@@ -80,7 +79,7 @@ Analiza los problemas que ha tenido la aplicación astroshop en las últimas 2 h
 
 * Reemplaza tu instruction file por el del paso 1:
 ```
-cp labs/LAB1-paso-1.md .github/copilot-instructions.md
+cp lab1/LAB1-paso-1.md .github/copilot-instructions.md
 ```
 (O agrega tú mismo las secciones "Método de análisis" y "Fuentes de datos".)
 
@@ -94,7 +93,7 @@ cp labs/LAB1-paso-1.md .github/copilot-instructions.md
 
 * Reemplaza tu instruction file por el del paso 2:
 ```
-cp labs/LAB1-paso-2.md .github/copilot-instructions.md
+cp lab1/LAB1-paso-2.md .github/copilot-instructions.md
 ```
 
 * Abre un chat nuevo, lanza el prompt de referencia.
@@ -102,12 +101,12 @@ cp labs/LAB1-paso-2.md .github/copilot-instructions.md
 
 ---
 
-## Paso 3 — Rigor (anti-alucinación) y Formato de salida
+## Paso 4 — Rigor (anti-alucinación) y Formato de salida
 
 * Reemplaza tu instruction file por el del paso 3:
 
 ```
-cp labs/LAB1-paso-3.md .github/copilot-instructions.md
+cp lab1/LAB1-paso-3.md .github/copilot-instructions.md
 ```
 
 * Abre un chat nuevo, lanza el prompt de referencia.
@@ -120,8 +119,8 @@ cp labs/LAB1-paso-3.md .github/copilot-instructions.md
 
 Copia el paso correspondiente y continúa:
 ```
-cp labs/LAB1-paso-0.md .github/copilot-instructions.md
-cp labs/LAB1-paso-1.md .github/copilot-instructions.md
-cp labs/LAB1-paso-2.md .github/copilot-instructions.md
-cp labs/LAB1-paso-3.md .github/copilot-instructions.md
+cp lab1/LAB1-paso-0.md .github/copilot-instructions.md
+cp lab1/LAB1-paso-1.md .github/copilot-instructions.md
+cp lab1/LAB1-paso-2.md .github/copilot-instructions.md
+cp lab1/LAB1-paso-3.md .github/copilot-instructions.md
 ```
