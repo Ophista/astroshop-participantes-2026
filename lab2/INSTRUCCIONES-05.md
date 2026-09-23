@@ -5,29 +5,29 @@ Instrucciones para investigar, documentar y remediar incidentes en el namespace 
 ## Reglas críticas
 
 - IMPORTANT: filtra SIEMPRE por namespace `matchesPhrase(k8s.namespace.name, "astroshop-05")` en cada consulta DQL. Es tu identificador principal, viene en toda la telemetría y es único para ti. Sin este filtro verías datos de otros participantes.
-- IMPORTANT: nunca hagas merge de un Pull Request. Abrir el PR sí; el merge lo aprueba una persona. 
+- IMPORTANT: nunca hagas merge de un Pull Request. Abrir el PR sí; el merge lo aprueba una persona.
 
 ## Enrutamiento de herramientas
 
-- Análisis, diagnóstico y causa raíz → lo haces con MCP de Dynatrace. Explora problemas de Davis, spans, logs y métricas consultando por el MCP a traves de consultas DQL funcionales. Filtra por tu namespace.
-- Crear notebooks, SLOs, dashboards o cualquier otro recurso → hazlo con la herramienta dtctl. No uses el MCP para crear estos recursos.
+- IMPORTANT: Análisis, diagnóstico y causa raíz → lo haces con MCP de Dynatrace. Explora problemas de Davis, spans, logs y métricas consultando por el MCP a traves de consultas DQL funcionales. Filtra por tu namespace.
+- Crear notebooks, SLOs, dashboards o cualquier otro recurso → hazlo con la herramienta dtctl.
 - Proponer fixes → usa el MCP de GitHub. Abre un Pull Request sobre `flags/payment-05.yaml` en `leidyruizrr/astroshop-participantes-2026`.
 - En una tarea de varios pasos, usa la herramienta correcta en cada uno y dilo en tu respuesta.
 - IMPORTANT: al crear cualquier recurso (notebook, SLO, dashboard), antepón SIEMPRE tu namespace al nombre: `astroshop-05 - <nombre>`. Nunca crees un recurso sin ese prefijo, para no colisionar con otros.
 - Para abrir el PR usa ÚNICAMENTE la herramienta del MCP de GitHub. No uses `gh` ni git por terminal.
 
-
 ## El ambiente
 
 - Aplicación: astroshop, aplicacion de ecommerce con microservicios en Kubernetes monitoreada en ambiente de Dynatrace dynatrace-lab.
-- Kubernetes en GCP (GKE), cluster `dt-lab-lcrr-demo`, namespace `astroshop-05`.
-- Reporta a Dynatrace por dos caminos a la vez: OneAgent (automático) y OpenTelemetry Collector. Por eso un servicio puede aparecer como varias   entidades, Siempre ancla tu análisis a la entidad del problema activo de Davis, dentro de tu namespace.
+- Kubernetes en GCP (GKE), cluster `dt-lab-lcrr-demo`, namespace `astroshop-05`. No tienes acceso a `kubectl` ni al cluster k8s. La única vía para cambiar su estado es un Pull Request.
+- Reporta a Dynatrace por dos caminos a la vez: OneAgent (automático) y OpenTelemetry Collector. Por eso un servicio puede aparecer como varias entidades, Siempre ancla tu análisis a la entidad del problema activo de Davis, dentro de tu namespace.
 
 ## Tips de consulta
 
 - Si no sabes qué campo contiene el dato, explóralo con `search`:  `fetch spans | search "keyword" | limit 10`. No inventes nombres de campos.
 - Los logs se asocian a entidades de infraestructura (pods, workloads, hosts, procesos), no a servicios. No filtres logs por `dt.entity.service`; filtra por `k8s.namespace.name`.
 - Estructura las consultas DQL en este orden: `fetch` → `filter` (namespace primero) → `summarize`/`fields` → `sort` → `limit`. Filtra lo antes posible.
+- Incluye `scanLimitGBytes: 500` en consultas de spans/logs: fetch spans, from:now()-2h, scanLimitGBytes: 500
 
 ## Reglas de investigación
 
@@ -38,16 +38,11 @@ Instrucciones para investigar, documentar y remediar incidentes en el namespace 
 - Cruza telemetría con código. Si un log trae un stack trace, búscalo en el código local. Un diagnóstico completo dice qué falla, dónde en el código, y por qué.
 - Si una consulta vuelve sin datos o falla, ajusta el timeframe o el filtro y reintenta. Si sigue sin datos, dilo y pide más contexto. No hagas suposiciones.
 
-
 ## Fallas por feature flags
 
 - El ambiente usa flagd (OpenFeature) para inyectar fallas mediante feature flags. Cuando diagnostiques un incidente, revisa si un flag activo es la causa y ubícalo en el código y la configuración.
 - Trata todo incidente como real. No especules sobre si es "una demo" o algo intencional. Diagnostica, explica la causa raíz con evidencia, y recomienda la mitigación como en producción.
 - Modelo de aprobación. Prepara la propuesta de mitigación y espera aprobación explícita antes de abrir el PR. Preséntala con claridad.
-
-## Acceso al cluster k8s
-- No tienes acceso a `kubectl` ni al cluster k8s. La única vía para cambiar su estado es un Pull Request.
-
 
 ## Formato de respuesta
 
@@ -55,5 +50,5 @@ Instrucciones para investigar, documentar y remediar incidentes en el namespace 
 - Estructura: qué falla → causa raíz → evidencia → recomendación.
 - Cita servicios con su nombre exacto de Dynatrace, y el código con archivo y línea.
 - Si no encuentras nada anormal, dilo claramente.
-- Al documentar en un notebook, incluye SOLO consultas que ejecutaste y que devolvieron datos. 
+- Al documentar en un notebook, incluye SOLO consultas que ejecutaste y que devolvieron datos.
 - Apéndice: al final, lista cada consulta DQL que ejecutaste y devolvió datos. Por cada una, incluye la consulta y una línea de qué hace y qué aportó. Omite las que no aportaron.

@@ -1,25 +1,25 @@
-# AstroShop — Investigación y remediación de incidentes (Participante 04)
+# AstroShop — Investigación y remediación de incidentes (Participante 12)
 
-Instrucciones para investigar, documentar y remediar incidentes en el namespace `astroshop-04` en el ambiente dynatrace-lab.
+Instrucciones para investigar, documentar y remediar incidentes en el namespace `astroshop-12` en el ambiente dynatrace-lab.
 
 ## Reglas críticas
 
-- IMPORTANT: filtra SIEMPRE por namespace `matchesPhrase(k8s.namespace.name, "astroshop-04")` en cada consulta DQL. Es tu identificador principal, viene en toda la telemetría y es único para ti. Sin este filtro verías datos de otros participantes.
+- IMPORTANT: filtra SIEMPRE por namespace `matchesPhrase(k8s.namespace.name, "astroshop-12")` en cada consulta DQL. Es tu identificador principal, viene en toda la telemetría y es único para ti. Sin este filtro verías datos de otros participantes.
 - IMPORTANT: nunca hagas merge de un Pull Request. Abrir el PR sí; el merge lo aprueba una persona.
 
 ## Enrutamiento de herramientas
 
 - IMPORTANT: Análisis, diagnóstico y causa raíz → lo haces con MCP de Dynatrace. Explora problemas de Davis, spans, logs y métricas consultando por el MCP a traves de consultas DQL funcionales. Filtra por tu namespace.
 - Crear notebooks, SLOs, dashboards o cualquier otro recurso → hazlo con la herramienta dtctl.
-- Proponer fixes → usa el MCP de GitHub. Abre un Pull Request sobre `flags/payment-04.yaml` en `leidyruizrr/astroshop-participantes-2026`.
+- Proponer fixes → usa el MCP de GitHub. Abre un Pull Request sobre `flags/payment-12.yaml` en `leidyruizrr/astroshop-participantes-2026`.
 - En una tarea de varios pasos, usa la herramienta correcta en cada uno y dilo en tu respuesta.
-- IMPORTANT: al crear cualquier recurso (notebook, SLO, dashboard), antepón SIEMPRE tu namespace al nombre: `astroshop-04 - <nombre>`. Nunca crees un recurso sin ese prefijo, para no colisionar con otros.
+- IMPORTANT: al crear cualquier recurso (notebook, SLO, dashboard), antepón SIEMPRE tu namespace al nombre: `astroshop-12 - <nombre>`. Nunca crees un recurso sin ese prefijo, para no colisionar con otros.
 - Para abrir el PR usa ÚNICAMENTE la herramienta del MCP de GitHub. No uses `gh` ni git por terminal.
 
 ## El ambiente
 
 - Aplicación: astroshop, aplicacion de ecommerce con microservicios en Kubernetes monitoreada en ambiente de Dynatrace dynatrace-lab.
-- Kubernetes en GCP (GKE), cluster `dt-lab-lcrr-demo`, namespace `astroshop-04`. No tienes acceso a `kubectl` ni al cluster k8s. La única vía para cambiar su estado es un Pull Request.
+- Kubernetes en GCP (GKE), cluster `dt-lab-lcrr-demo`, namespace `astroshop-12`. No tienes acceso a `kubectl` ni al cluster k8s. La única vía para cambiar su estado es un Pull Request.
 - Reporta a Dynatrace por dos caminos a la vez: OneAgent (automático) y OpenTelemetry Collector. Por eso un servicio puede aparecer como varias entidades, Siempre ancla tu análisis a la entidad del problema activo de Davis, dentro de tu namespace.
 
 ## Tips de consulta

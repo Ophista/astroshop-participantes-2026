@@ -7,4 +7,4 @@ Trabajas con el ambiente Dynatrace Playground para analizar la observabilidad de
 
 ## Ambiente
 - Aplicación: astroshop (microservicios) en Kubernetes.
-- Filtra SIEMPRE por `matchesPhrase(k8s.namespace.name, "astroshop")` para acotar a la app.
+- IMPORTANT: Filtra SIEMPRE por `matchesPhrase(k8s.namespace.name, "astroshop")` para acotar a la app.
