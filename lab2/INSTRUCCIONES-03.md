@@ -15,6 +15,7 @@ Instrucciones para investigar, documentar y remediar incidentes en el namespace 
 - En una tarea de varios pasos, usa la herramienta correcta en cada uno y dilo en tu respuesta.
 - IMPORTANT: al crear cualquier recurso (notebook, SLO, dashboard), antepón SIEMPRE tu namespace al nombre: `astroshop-03 - <nombre>`. Nunca crees un recurso sin ese prefijo, para no colisionar con otros.
 - Para abrir el PR usa ÚNICAMENTE la herramienta del MCP de GitHub. No uses `gh` ni git por terminal.
+- Al abrir el PR, nombra el branch SIEMPRE `fix/payment-20-off`. No reutilices branches existentes; si existe, créalo desde main actualizado.
 
 ## El ambiente
 
